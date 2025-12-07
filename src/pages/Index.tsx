@@ -319,6 +319,9 @@ export default function Index() {
       <footer className="py-8 px-4 bg-white/80 backdrop-blur-md border-t">
         <div className="container mx-auto text-center text-muted-foreground">
           <p>© 2024 Здесь ремонт. Все права защищены.</p>
+          <a href="/leads" className="text-sm text-primary hover:underline mt-2 inline-block">
+            Админ-панель
+          </a>
         </div>
       </footer>
 
@@ -661,10 +664,26 @@ export default function Index() {
                       </div>
                     </RadioGroup>
                     <Button
-                      onClick={() => {
+                      onClick={async () => {
                         if (formData.consultationType) {
-                          handleNextStep(formData.consultationType);
-                          toast.success('Заявка отправлена! Мы свяжемся с вами в ближайшее время');
+                          try {
+                            const response = await fetch('https://functions.poehali.dev/cbf81f0f-7e70-4043-91fe-453b54d93e7e', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify(formData)
+                            });
+                            
+                            if (response.ok) {
+                              handleNextStep(formData.consultationType);
+                              toast.success('Заявка отправлена! Мы свяжемся с вами в ближайшее время');
+                            } else {
+                              toast.error('Ошибка при отправке заявки');
+                            }
+                          } catch (error) {
+                            toast.error('Ошибка при отправке заявки');
+                          }
                         }
                       }}
                       className="mt-4 w-full"

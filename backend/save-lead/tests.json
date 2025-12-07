@@ -1,0 +1,30 @@
+{
+  "tests": [
+    {
+      "name": "Save lead successfully",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Тестовый клиент",
+        "phone": "+7 (999) 123-45-67",
+        "city": "Москва",
+        "address": "ул. Тестовая, д. 1",
+        "objectType": "Квартира на вторичке",
+        "area": "65",
+        "rooms": "2",
+        "services": ["Капитальный ремонт во вторичке", "Дизайн-проект с реализацией"],
+        "startTime": "В течение месяца",
+        "budget": "1-2 млн. руб.",
+        "materialsInterest": "Да, интересует",
+        "consultationType": "Выезд на объект"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "leadId": "number",
+        "createdAt": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
